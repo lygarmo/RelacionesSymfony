@@ -13,8 +13,12 @@ class Autores
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $nombre = null;
+
+    // Relación de 1 a 1 con la entidad Libro
+    #[ORM\OneToOne(targetEntity: Libro::class, mappedBy: 'autor')]
+    private ?Libro $libro = null;
 
     public function getId(): ?int
     {
@@ -29,6 +33,18 @@ class Autores
     public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getLibro(): ?Libro
+    {
+        return $this->libro;
+    }
+
+    public function setLibro(Libro $libro): static
+    {
+        $this->libro = $libro;
 
         return $this;
     }

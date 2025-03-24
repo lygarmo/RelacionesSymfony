@@ -16,8 +16,10 @@ class Libro
     #[ORM\Column(length: 100)]
     private ?string $titulo = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $autor = null;
+    // Relación de 1 a 1 con la entidad Autor
+    #[ORM\OneToOne(targetEntity: Autores::class, inversedBy: 'libro')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Autores $autor = null;
 
     #[ORM\Column]
     private ?int $a_publicacion = null;
@@ -42,12 +44,12 @@ class Libro
         return $this;
     }
 
-    public function getAutor(): ?string
+    public function getAutor(): ?Autores
     {
         return $this->autor;
     }
 
-    public function setAutor(string $autor): static
+    public function setAutor(Autores $autor): static
     {
         $this->autor = $autor;
 

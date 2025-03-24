@@ -1,12 +1,13 @@
 <?php
-
 namespace App\Form;
 
 use App\Entity\Libro;
+use App\Entity\Autores;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType; // Esto se usa para las relaciones con otras entidades
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,14 +15,17 @@ class LibroType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // Construimos el formulario con los campos que se requieren
         $builder
             ->add('titulo', TextType::class, [
                 'label' => 'Título del libro',
                 'attr' => ['placeholder' => 'Introduce el título del libro'],
             ])
-            ->add('autor', TextType::class, [
-                'label' => 'Autor del libro',
-                'attr' => ['placeholder' => 'Introduce el nombre del autor'],
+            ->add('autor', EntityType::class, [
+                'class' => Autores::class,  // Aquí definimos que el campo es de la entidad 'Autores'
+                'choice_label' => 'nombre', // Definimos qué atributo de la entidad mostrar en el select (por ejemplo, 'nombre')
+                'placeholder' => 'Selecciona un autor', // Mensaje que aparece en el desplegable
+                'required' => true,  // Hacemos el campo obligatorio
             ])
             ->add('a_publicacion', IntegerType::class, [
                 'label' => 'Año de publicación',
@@ -33,14 +37,13 @@ class LibroType extends AbstractType
             ])
             ->add('guardar', SubmitType::class, [
                 'label' => 'Guardar libro',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Libro::class,  // Vincula este formulario con la entidad Libro
+            'data_class' => Libro::class, // Vincula este formulario con la entidad Libro
         ]);
     }
 }
