@@ -24,8 +24,9 @@ class Libro
     #[ORM\Column]
     private ?int $a_publicacion = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $editorial = null;
+    #[ORM\ManyToOne(targetEntity: Editorial::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Editorial $editorial = null;
 
     public function getId(): ?int
     {
@@ -68,12 +69,12 @@ class Libro
         return $this;
     }
 
-    public function getEditorial(): ?string
+    public function getEditorial(): ?Editorial
     {
         return $this->editorial;
     }
 
-    public function setEditorial(string $editorial): static
+    public function setEditorial(Editorial $editorial): static
     {
         $this->editorial = $editorial;
 

@@ -3,6 +3,7 @@ namespace App\Form;
 
 use App\Entity\Libro;
 use App\Entity\Autores;
+use App\Entity\Editorial;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -31,9 +32,11 @@ class LibroType extends AbstractType
                 'label' => 'Año de publicación',
                 'attr' => ['placeholder' => 'Introduce el año de publicación'],
             ])
-            ->add('editorial', TextType::class, [
-                'label' => 'Editorial',
-                'attr' => ['placeholder' => 'Introduce la editorial'],
+            ->add('editorial', EntityType::class, [
+                'class' => Editorial::class,
+                'choice_label' => 'nombre', // Usamos el campo 'nombre' para mostrar la editorial
+                'placeholder' => 'Selecciona una editorial',
+                'required' => true,
             ])
             ->add('guardar', SubmitType::class, [
                 'label' => 'Guardar libro',

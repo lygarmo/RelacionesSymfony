@@ -25,7 +25,7 @@
                     <td>{{ libro.titulo }}</td>
                     <td>{{ libro.autor.nombre }}</td>
                     <td>{{ libro.apublicacion }}</td>
-                    <td>{{ libro.editorial }}</td>
+                    <td>{{ libro.editorial.nombre }}</td>
                     <td> <a href="{{ path('app_libro_eliminar', {'id':libro.id}) }}">  - </a></td>
                     <td> <a href="{{ path('app_libro_editar', {'id':libro.id}) }}"> * </a></td>
                 </tr>
